@@ -31,4 +31,21 @@ public class Opponent : MonoBehaviour
             transform.position = OpponentStartPos;
         }
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Booster"))
+        {
+            OpponentAgent.speed *= 1.5f;
+            speedBoosterIcon.SetActive(true);
+            StartCoroutine(SlowAfterAWhileCoroutine());
+        }
+    }
+
+    private IEnumerator SlowAfterAWhileCoroutine()
+    {
+        yield return new WaitForSeconds(2.0f);
+        OpponentAgent.speed /= 1.5f;
+        speedBoosterIcon.SetActive(false);
+    }
 }

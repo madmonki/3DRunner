@@ -10,6 +10,14 @@ public class CheckCollisions : MonoBehaviour
     public PlayerController playerController;
     Vector3 PlayerStartPos;
     public GameObject speedBoosterIcon;
+    private InGameRanking ig;
+
+    private void Start()
+    {
+        PlayerStartPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        speedBoosterIcon.SetActive(false);
+        ig = FindObjectOfType<InGameRanking>();
+    }
 
     void PlayerFinished()
     {
@@ -23,10 +31,19 @@ public class CheckCollisions : MonoBehaviour
             AddCoin();
             other.gameObject.SetActive(false);
         }
-
-        if (other.CompareTag("Booster"))
+        else if (other.CompareTag("Finish"))
         {
+            PlayerFinished();
+            if (ig.namesTxt[6].text == "Player")
+                Debug.Log("W");
+            else
+                Debug.Log("L");
+        }
+        else if (other.CompareTag("Booster"))
+        {
+            speedBoosterIcon.SetActive(true);
             playerController.runningSpeed *= 1.5f;
+            StartCoroutine(SlowAfterAWhileCoroutine());
         }
     }
 
@@ -42,5 +59,12 @@ public class CheckCollisions : MonoBehaviour
     {
         ++score;
         CoinText.text = "Score: " + score.ToString();
+    }
+
+    private IEnumerator SlowAfterAWhileCoroutine()
+    {
+        yield return new WaitForSeconds(2.0f);
+        playerController.runningSpeed /= 1.5f;
+        speedBoosterIcon.SetActive(false);
     }
 }

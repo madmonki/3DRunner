@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     public float runningSpeed;
     public float xSpeed;
     public float limitx;
+    public Animator PlayerAnim;
+    public GameObject Player;
 
     void Start()
     {

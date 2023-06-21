@@ -2006,6 +2006,8 @@ MonoBehaviour:
   runningSpeed: 7
   xSpeed: 250
   limitx: 3.75
+  PlayerAnim: {fileID: 0}
+  Player: {fileID: 0}
 --- !u!54 &1624603046
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2122,8 +2124,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   namesTxt:
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
