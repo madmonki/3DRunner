@@ -16,6 +16,14 @@ public class CheckCollisions : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Obstacle"))
+        {
+            Debug.Log("Hit");
+        }
+    }
+
     public void AddCoin()
     {
         ++score;
