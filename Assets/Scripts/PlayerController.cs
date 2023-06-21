@@ -38,4 +38,5 @@ public class PlayerController : MonoBehaviour
         Vector3 newPosition = new Vector3(newX, transform.position.y, transform.position.z + runningSpeed * Time.deltaTime);
         transform.position = newPosition;
     }
+
 }
