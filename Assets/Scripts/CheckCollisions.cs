@@ -7,16 +7,22 @@ public class CheckCollisions : MonoBehaviour
 {
     public int score;
     public TextMeshProUGUI CoinText;
-    public PlayerController playerController;
+    private PlayerController playerController;
     Vector3 PlayerStartPos;
-    public GameObject speedBoosterIcon;
+    // public GameObject speedBoosterIcon;
     private InGameRanking ig;
+    private float baseSpeed;
+    private bool boostFlag;
 
     private void Start()
     {
+        if (gameObject == GameObject.Find("Player"))
+            playerController = GameObject.Find("Player").GetComponent<PlayerController>();
         PlayerStartPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        speedBoosterIcon.SetActive(false);
+        // speedBoosterIcon.SetActive(false);
         ig = FindObjectOfType<InGameRanking>();
+        baseSpeed = playerController.runningSpeed;
+        boostFlag = false;
     }
 
     void PlayerFinished()
@@ -34,14 +40,15 @@ public class CheckCollisions : MonoBehaviour
         else if (other.CompareTag("Finish"))
         {
             PlayerFinished();
-            if (ig.namesTxt[6].text == "Player")
+            /* if (ig.namesTxt[6].text == "Player")
                 Debug.Log("W");
             else
-                Debug.Log("L");
+                Debug.Log("L"); */
         }
         else if (other.CompareTag("Booster"))
         {
-            speedBoosterIcon.SetActive(true);
+            boostFlag = true;
+            // speedBoosterIcon.SetActive(true);
             playerController.runningSpeed *= 1.5f;
             StartCoroutine(SlowAfterAWhileCoroutine());
         }
@@ -52,6 +59,8 @@ public class CheckCollisions : MonoBehaviour
         if (collision.gameObject.CompareTag("Obstacle"))
         {
             transform.position = PlayerStartPos;
+            boostFlag = false;
+            playerController.runningSpeed = baseSpeed;
         }
     }
 
@@ -64,7 +73,10 @@ public class CheckCollisions : MonoBehaviour
     private IEnumerator SlowAfterAWhileCoroutine()
     {
         yield return new WaitForSeconds(2.0f);
-        playerController.runningSpeed /= 1.5f;
-        speedBoosterIcon.SetActive(false);
+        if (boostFlag == true) {
+            playerController.runningSpeed /= 1.5f;
+            // speedBoosterIcon.SetActive(false);
+            boostFlag = false;
+        }
     }
 }

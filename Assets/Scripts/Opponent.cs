@@ -9,13 +9,13 @@ public class Opponent : MonoBehaviour
     public NavMeshAgent OpponentAgent;
     public GameObject Target;
     public Vector3 OpponentStartPos;
-    public GameObject speedBoosterIcon;
+    // public GameObject speedBoosterIcon;
 
     void Start()
     {
         OpponentAgent = GetComponent<NavMeshAgent>();
         OpponentStartPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        speedBoosterIcon.SetActive(false);
+        // speedBoosterIcon.SetActive(false);
     }
 
     // Update is called once per frame
@@ -37,7 +37,7 @@ public class Opponent : MonoBehaviour
         if (other.CompareTag("Booster"))
         {
             OpponentAgent.speed *= 1.5f;
-            speedBoosterIcon.SetActive(true);
+            // speedBoosterIcon.SetActive(true);
             StartCoroutine(SlowAfterAWhileCoroutine());
         }
     }
@@ -46,6 +46,6 @@ public class Opponent : MonoBehaviour
     {
         yield return new WaitForSeconds(2.0f);
         OpponentAgent.speed /= 1.5f;
-        speedBoosterIcon.SetActive(false);
+        // speedBoosterIcon.SetActive(false);
     }
 }
